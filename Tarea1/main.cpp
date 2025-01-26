@@ -9,14 +9,14 @@ using namespace std;
 int main() {
     const int tam = 1000; //Tam de los arrays
     int A[tam], B[tam], R[tam];//Arrays de numeros y de resultados
-
+    int i;
     srand(time(0)); 
     for (int i = 0; i < tam; i++) { //llenado de los dos arreglos (A,B)
         A[i] = rand() % 100;
         B[i] = rand() % 100;
     }
 
-#pragma omp parallel for
+#pragma omp parallel for shared(A,B,R,tam) private(i) schedule(static,tam)
     for (int i = 0; i < tam; i++) { //for de operaciones
         R[i] = A[i] + B[i];
     }
